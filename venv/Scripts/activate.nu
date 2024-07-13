@@ -32,7 +32,7 @@ export-env {
       }
     }
 
-    let virtual_env = 'D:\Personal Projects\Umesh_Msc_Project_2024\secureCode'
+    let virtual_env = 'D:\Personal Projects\Umesh_Msc_Project_2024\venv'
     let bin = 'Scripts'
 
     let is_windows = ($nu.os-info.family) == 'windows'

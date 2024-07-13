@@ -45,7 +45,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='D:\Personal Projects\Umesh_Msc_Project_2024\secureCode'
+VIRTUAL_ENV='D:\Personal Projects\Umesh_Msc_Project_2024\venv'
 if ([ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]) && $(command -v cygpath &> /dev/null) ; then
     VIRTUAL_ENV=$(cygpath -u "$VIRTUAL_ENV")
 fi
