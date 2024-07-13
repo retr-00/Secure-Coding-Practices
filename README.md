@@ -2,7 +2,7 @@
 
 ![coding](https://github.com/user-attachments/assets/0e3c6bde-39b6-421e-8a72-fd30572db374)
 # Umesh_Msc_Project_2024
-# Secure Coding Practives
+# Secure Coding Practices
 
 ## Project Overview
 This project is designed to demonstrate the practical differences between secure and non-secure coding practices within a Django web application. The focus is on authentication systems, showcasing common vulnerabilities and how to mitigate them through improved coding practices.
