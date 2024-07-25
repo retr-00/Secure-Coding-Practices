@@ -19,4 +19,6 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('authapp.urls')),  # Make sure to create urls.py in authapp if not present
+
 ]
