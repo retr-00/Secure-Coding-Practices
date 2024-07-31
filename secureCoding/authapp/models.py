@@ -30,10 +30,10 @@ class MyUser(AbstractBaseUser):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        return self.is_admin  # Changed to check if user is admin
+        return True
 
     def has_module_perms(self, app_label):
-        return self.is_admin  # Changed to check if user is admin
+        return True
 
     @property
     def is_staff(self):
