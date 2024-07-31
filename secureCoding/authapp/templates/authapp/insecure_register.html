@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Insecure Register</title>
+    <link rel="stylesheet" href="{% static 'authapp/styles.css' %}">
+</head>
+<body>
+    <div class="form-container">
+        <h2> Insecure Sign Up</h2>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Sign Up</button>
+            <div class="link-container">
+                Already have an account? <a href="{% url 'insecure_login' %}">Log In</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
