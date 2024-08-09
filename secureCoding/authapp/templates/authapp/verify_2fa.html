@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Log In</title>
+    <title>Verify OTP</title>
     <link rel="stylesheet" href="{% static 'authapp/styles.css' %}">
 </head>
 <body>
     <div class="form-container">
-        <h2>Secure Log In</h2>
+        <h2>Verify OTP</h2>
 
         {% if messages %}
         <div class="messages">
@@ -23,18 +23,12 @@
 
         <form method="post">
             {% csrf_token %}
-            <label for="email">Email</label>
-            <input type="email" name="email" placeholder="Email" required>
-
-            <label for="password">Password</label>
-            <input type="password" name="password" placeholder="Password" required>
-
-            <button type="submit">Log In</button>
+            <label for="otp_token">Enter the OTP from your app:</label>
+            <input type="text" id="otp_token" name="otp_token" placeholder="Enter the OTP" required>
+            <button type="submit">Verify OTP</button>
         </form>
 
-        <div class="link-container">
-            Need an account? <a href="{% url 'secure_register' %}">Sign Up</a>
-        </div>
+        <a href="{% url 'setup_2fa' %}" class="setup-2fa-link">Set up 2FA</a>
     </div>
 </body>
 </html>

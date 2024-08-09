@@ -1,23 +1,18 @@
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django_otp import devices_for_user
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
-        """
-        Creates and saves a User with the given email and password.
-        """
         if not email:
             raise ValueError('The Email field must be set')
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
-        user.set_password(password)  # Automatically hashes the password
+        user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
-        """
-        Creates and saves a superuser with the given email and password.
-        """
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -28,11 +23,10 @@ class MyUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-class MyUser(AbstractBaseUser):
+class MyUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='email address', max_length=255, unique=True)
     is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)  # Add is_staff field
-    is_superuser = models.BooleanField(default=False)  # Add is_superuser field
+    is_staff = models.BooleanField(default=False)
 
     objects = MyUserManager()
 
@@ -43,9 +37,15 @@ class MyUser(AbstractBaseUser):
         return self.email
 
     def has_perm(self, perm, obj=None):
-        "Does the user have a specific permission?"
         return True
 
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app `app_label`?"
         return True
+
+    @property
+    def is_verified(self):
+        # Returns True if the user has passed 2FA verification
+        for device in devices_for_user(self):
+            if device.is_verified():
+                return True
+        return False
