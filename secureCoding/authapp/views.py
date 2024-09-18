@@ -27,7 +27,7 @@ def secure_login(request):
     if request.method == "POST":
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, email=email, password=password)xczxc
         if user is not None:
             login(request, user)
             # Redirect to the OTP verification page without displaying a login success message
@@ -75,21 +75,15 @@ def insecure_login(request):
 
 def setup_2fa(request):
     user = request.user
-
-    # If the user already has a TOTP device, we will overwrite it with a new one
     device = None
     for existing_device in devices_for_user(user):
         if isinstance(existing_device, TOTPDevice):
             device = existing_device
             break
-
-    # If no existing TOTP device was found, create a new one
     if not device:
         device = TOTPDevice.objects.create(user=user, name='default')
 
-    device.confirmed = False  # Reset confirmation for the device
-
-    # Generate QR code as PNG
+    device.confirmed = False
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -98,13 +92,10 @@ def setup_2fa(request):
     )
     qr.add_data(device.config_url)
     qr.make(fit=True)
-
-    # Create PNG image
     img = qr.make_image(fill_color="black", back_color="white")
     buffer = BytesIO()
-    img.save(buffer)  # Remove the format argument
-    png_data = base64.b64encode(buffer.getvalue()).decode('utf-8')  # Encode the PNG to base64
-
+    img.save(buffer)
+    png_data = base64.b64encode(buffer.getvalue()).decode('utf-8') 
     if request.method == 'POST':
         otp_token = request.POST.get('otp_token')
         if device.verify_token(otp_token):
